@@ -1,7 +1,7 @@
 import os
 import subprocess
 from jinja2 import Template
-from pypdf import PdfMerger
+from pypdf import PdfWriter
 
 
 class PDFGenerator:
@@ -54,12 +54,12 @@ class PDFGenerator:
 
     def merge_pdfs(self, pdf_files, output_path):
 
-        merger = PdfMerger()
+        writer = PdfWriter()
 
         for pdf in pdf_files:
-            merger.append(pdf)
+            writer.append(pdf)
 
-        merger.write(output_path)
-        merger.close()
+        with open(output_path, "wb") as f:
+            writer.write(f)
 
         return output_path
