@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<title>إدارة الموظفين</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f4f6f9;
+padding:40px;
+}
+
+h1{
+text-align:center;
+margin-bottom:30px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th, td{
+padding:10px;
+border:1px solid #ddd;
+text-align:center;
+}
+
+th{
+background:#3498db;
+color:white;
+}
+
+button{
+padding:6px 12px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.add{
+background:#2ecc71;
+color:white;
+margin-bottom:15px;
+}
+
+.edit{
+background:#f39c12;
+color:white;
+}
+
+.delete{
+background:#e74c3c;
+color:white;
+}
+
+.save{
+background:#3498db;
+color:white;
+margin-top:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>إدارة الموظفين</h1>
+
+<button class="add">إضافة موظف</button>
+
+<table>
+
+<tr>
+<th>الرقم</th>
+<th>الرقم التعريفي</th>
+<th>الاسم</th>
+<th>اللقب</th>
+<th>الاتجاه</th>
+<th>الوظيفة</th>
+<th>الصفة</th>
+<th>القسم</th>
+<th>تعديل</th>
+<th>حذف</th>
+</tr>
+
+{% for emp in employees %}
+
+<tr>
+
+<td>{{ emp[0] }}</td>
+<td>{{ emp[1] }}</td>
+<td>{{ emp[2] }}</td>
+<td>{{ emp[3] }}</td>
+<td>{{ emp[4] }}</td>
+<td>{{ emp[5] }}</td>
+<td>{{ emp[6] }}</td>
+<td>{{ emp[7] }}</td>
+
+<td>
+<button class="edit">تعديل</button>
+</td>
+
+<td>
+<button class="delete">حذف</button>
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+
+<button class="save">حفظ</button>
+
+</body>
+
+</html>

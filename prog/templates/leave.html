@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+<title>تحرير الإجازات</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f9;
+padding:40px;
+}
+
+h1{
+text-align:center;
+margin-bottom:30px;
+}
+
+input, select{
+padding:8px;
+margin:5px;
+}
+
+button{
+padding:8px 15px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+.add{
+background:#2ecc71;
+color:white;
+}
+
+.print{
+background:#3498db;
+color:white;
+margin-top:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+margin-top:30px;
+}
+
+th, td{
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#34495e;
+color:white;
+}
+
+.message{
+color:green;
+margin-top:10px;
+}
+
+#leaveForm{
+display:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>تحرير الإجازات</h1>
+
+
+{% if message %}
+<div class="message">
+{{ message }}
+</div>
+{% endif %}
+
+<h3>فلترة الموظفين</h3>
+<input type="text" id="filterInput" placeholder="ابحث عن موظف...">
+
+<table id="employeesTable">
+<tr>
+<th>الرقم التعريفي</th>
+<th>الاسم</th>
+<th>اللقب</th>
+<th>الاتجاه</th>
+<th>الوظيفة</th>
+<th>الصفة</th>
+<th>القسم</th>
+<th>الإجراءات</th>
+</tr>
+
+{% for emp in employees %}
+
+<tr class="employeeRow">
+<td>{{ emp[0] }}</td>
+<td>{{ emp[3] }}</td>
+<td>{{ emp[4] }}</td>
+<td>{{ emp[6] }}</td>
+<td>{{ emp[7] }}</td>
+<td>{{ emp[8] }}</td>
+<td>{{ emp[9] }}</td>
+<td>
+<button onclick="selectEmployee('{{ emp[0] }}')">تحرير إجازة</button>
+<button onclick="addToList('{{ emp[0] }}')">إضافة إلى القائمة</button>
+</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<form method="POST" id="leaveForm">
+
+<input type="hidden" name="national_id" id="selectedNationalId">
+
+<h3>بيانات الإجازة</h3>
+
+مكان التحرير
+<input type="text" name="issued_in" required>
+
+تاريخ البداية
+<input type="date" name="start_date" required>
+
+تاريخ النهاية
+<input type="date" name="end_date" required>
+
+<br><br>
+
+<button class="add" type="submit" name="action" value="add">
+إضافة إلى القائمة
+</button>
+
+</form>
+
+
+<h2>قائمة الإجازات</h2>
+
+<table>
+
+<tr>
+<th>الرقم</th>
+<th>الرقم التعريفي</th>
+<th>البداية</th>
+<th>النهاية</th>
+<th>مكان التحرير</th>
+</tr>
+
+{% for leave in leaves_list %}
+
+<tr>
+
+<td>{{ leave.serial_number }}</td>
+<td>{{ leave.national_id }}</td>
+<td>{{ leave.start_date }}</td>
+<td>{{ leave.end_date }}</td>
+<td>{{ leave.issued_in }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+<form method="POST">
+
+<button class="print" type="submit" name="action" value="print">
+طباعة كل الإجازات
+</button>
+
+</form>
+
+<script>
+document.getElementById('filterInput').addEventListener('keyup', function() {
+    var filter = this.value.toLowerCase();
+    var rows = document.querySelectorAll('.employeeRow');
+    rows.forEach(function(row) {
+        var text = row.textContent.toLowerCase();
+        if (text.includes(filter)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+
+function selectEmployee(nationalId) {
+    document.getElementById('selectedNationalId').value = nationalId;
+    document.getElementById('leaveForm').style.display = 'block';
+}
+
+function addToList(nationalId) {
+    // هنا يمكن إضافة منطق لإضافة مباشرة إلى القائمة بدون ملء النموذج
+    // لكن للبساطة، سنستخدم نفس النموذج مع قيم افتراضية
+    document.getElementById('selectedNationalId').value = nationalId;
+    // يمكن تعيين قيم افتراضية للتواريخ إذا لزم الأمر
+    document.getElementById('leaveForm').style.display = 'block';
+}
+</script>
+
+</body>
+</html>

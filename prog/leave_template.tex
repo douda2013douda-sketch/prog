@@ -1,0 +1,54 @@
+\documentclass[12pt, a4paper]{article}
+
+\usepackage[margin=1.5cm]{geometry}
+
+\usepackage{polyglossia}
+\setmainlanguage{arabic}
+\setmainfont{Amiri}
+
+\pagestyle{empty}
+
+\newcommand{\halfpage}{
+    \begin{minipage}[t][0.47\textheight]{\textwidth}
+        
+        \vspace*{0.5cm}
+        \begin{center}
+            {\Huge \textbf{عنوان}}
+        \end{center}
+        \vspace{1cm}
+        
+        {\large \bfseries
+        \noindent الرقم: {{ employee.number }} \\[1.2ex]
+        \noindent الرقم التعريفي: {{ employee.national_id }} \\[1.2ex]
+        \noindent الاسم: {{ employee.first_name }} \\[1.2ex]
+        \noindent اللقب: {{ employee.last_name }} \\[1.2ex]
+        \noindent الاتجاه: {{ employee.direction }} \\[1.2ex]
+        \noindent الوظيفة: {{ employee.job }} \\[1.2ex]
+        \noindent الصفة: {{ employee.title }} \\[1.2ex]
+        \noindent القسم: {{ employee.department }} \\[1.2ex]
+        }
+        
+        \vfill
+        
+        \noindent\hfill
+        \begin{minipage}{0.45\textwidth}
+            {\large \textbf{حرر ب: {{ leave.issued_in }} }}
+            \vspace*{2.5cm}
+        \end{minipage}
+        
+    \end{minipage}
+}
+
+\begin{document}
+
+\halfpage
+
+\vfill
+\begin{center}
+\rule{0.8\textwidth}{0.5pt}
+\end{center}
+\vfill
+
+\halfpage
+
+\end{document}
