@@ -10,7 +10,7 @@ cursor.execute("""
 CREATE TABLE IF NOT EXISTS employees (
 
     national_id TEXT PRIMARY KEY,
-    number INTEGER,
+    number INTEGER UNIQUE,
     num_file TEXT,
     first_name TEXT,
     last_name TEXT,

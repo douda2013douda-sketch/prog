@@ -25,7 +25,7 @@ class Database:
         CREATE TABLE IF NOT EXISTS employees (
 
             national_id TEXT PRIMARY KEY,
-            number INTEGER,
+            number INTEGER UNIQUE,
             num_file TEXT,
             first_name TEXT,
             last_name TEXT,
@@ -60,6 +60,8 @@ class Database:
 
 
     def add_employee(self, employee):
+
+        employee.number = self.get_next_employee_number()
 
         self.cursor.execute("""
         INSERT INTO employees (
@@ -184,13 +186,12 @@ class Database:
 
         return [Leave(*row) for row in rows]
 
-    def get_next_serial(self, year):
+    def get_next_employee_number(self):
 
         self.cursor.execute("""
-        SELECT MAX(serial_number)
-        FROM leaves
-        WHERE year=?
-        """, (year,))
+        SELECT MAX(number)
+        FROM employees
+        """)
 
         result = self.cursor.fetchone()
 

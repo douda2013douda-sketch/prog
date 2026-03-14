@@ -108,10 +108,9 @@ margin-bottom:20px;
 <div id="formContainer">
 <form id="employeeForm" method="POST">
 <input type="hidden" name="action" id="formAction" value="add">
-<input type="hidden" name="national_id" id="editNationalId">
+<input type="hidden" name="number" id="editNumber">
 
 <label>الرقم التعريفي: <input type="text" name="national_id_input" id="nationalIdInput" required></label><br>
-<label>الرقم: <input type="number" name="number" required></label><br>
 <label>رقم الملف: <input type="text" name="num_file" required></label><br>
 <label>الاسم الأول: <input type="text" name="first_name" required></label><br>
 <label>اللقب: <input type="text" name="last_name" required></label><br>
@@ -128,8 +127,8 @@ margin-bottom:20px;
 <table id="employeesTable">
 
 <tr>
-<th>الرقم</th>
 <th>الرقم التعريفي</th>
+<th>رقم الملف</th>
 <th>الاسم</th>
 <th>اللقب</th>
 <th>الاتجاه</th>
@@ -144,7 +143,6 @@ margin-bottom:20px;
 
 <tr class="employeeRow">
 
-<td>{{ emp[0] }}</td>
 <td>{{ emp[1] }}</td>
 <td>{{ emp[2] }}</td>
 <td>{{ emp[3] }}</td>
@@ -152,9 +150,10 @@ margin-bottom:20px;
 <td>{{ emp[5] }}</td>
 <td>{{ emp[6] }}</td>
 <td>{{ emp[7] }}</td>
+<td>{{ emp[8] }}</td>
 
 <td>
-<button class="edit" onclick="editEmployee('{{ emp[0] }}', '{{ emp[1] }}', '{{ emp[2] }}', '{{ emp[3] }}', '{{ emp[4] }}', '{{ emp[5] }}', '{{ emp[6] }}', '{{ emp[7] }}')">تعديل</button>
+<button class="edit" onclick="editEmployee('{{ emp[0] }}', '{{ emp[1] }}', '{{ emp[2] }}', '{{ emp[3] }}', '{{ emp[4] }}', '{{ emp[5] }}', '{{ emp[6] }}', '{{ emp[7] }}', '{{ emp[8] }}')">تعديل</button>
 </td>
 
 <td>
@@ -187,19 +186,17 @@ document.getElementById('searchInput').addEventListener('keyup', function() {
 
 function showAddForm() {
     document.getElementById('formAction').value = 'add';
-    document.getElementById('editNationalId').value = '';
+    document.getElementById('editNumber').value = '';
     document.getElementById('nationalIdInput').value = '';
-    document.getElementById('nationalIdInput').disabled = false;
     document.getElementById('employeeForm').reset();
     document.getElementById('formContainer').style.display = 'block';
 }
 
-function editEmployee(nationalId, number, numFile, firstName, lastName, direction, job, title, department) {
+function editEmployee(number, nationalId, numFile, firstName, lastName, direction, job, title, department) {
     document.getElementById('formAction').value = 'edit';
-    document.getElementById('editNationalId').value = nationalId;
+    document.getElementById('editNumber').value = number;
     document.getElementById('nationalIdInput').value = nationalId;
     document.getElementById('nationalIdInput').disabled = false;
-    document.getElementById('employeeForm').elements['number'].value = number;
     document.getElementById('employeeForm').elements['num_file'].value = numFile;
     document.getElementById('employeeForm').elements['first_name'].value = firstName;
     document.getElementById('employeeForm').elements['last_name'].value = lastName;

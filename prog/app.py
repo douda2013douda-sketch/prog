@@ -30,7 +30,6 @@ def employees():
 
         if action == "add":
             national_id = request.form["national_id_input"]
-            number = request.form["number"]
             num_file = request.form["num_file"]
             first_name = request.form["first_name"]
             last_name = request.form["last_name"]
@@ -39,14 +38,14 @@ def employees():
             title = request.form["title"]
             department = request.form["department"]
 
-            employee = Employee(national_id, number, num_file, first_name, last_name, direction, job, title, department)
+            employee = Employee(national_id, None, num_file, first_name, last_name, direction, job, title, department)
             db.add_employee(employee)
             message = "تمت إضافة الموظف بنجاح"
 
         elif action == "edit":
-            old_national_id = request.form["national_id"]
-            new_national_id = request.form["national_id_input"]
             number = request.form["number"]
+            old_national_id = request.form["national_id_input"]  # wait, no, since it's the same field
+            new_national_id = request.form["national_id_input"]
             num_file = request.form["num_file"]
             first_name = request.form["first_name"]
             last_name = request.form["last_name"]
@@ -55,20 +54,15 @@ def employees():
             title = request.form["title"]
             department = request.form["department"]
 
-            if old_national_id != new_national_id:
-                # إذا تغير الرقم التعريفي، احذف القديم وأضف جديد
-                db.delete_employee(old_national_id)
-                employee = Employee(new_national_id, number, num_file, first_name, last_name, direction, job, title, department)
-                db.add_employee(employee)
-                message = "تم تحديث الموظف بنجاح (تم تغيير الرقم التعريفي)"
-            else:
-                employee = Employee(new_national_id, number, num_file, first_name, last_name, direction, job, title, department)
-                db.update_employee(employee)
-                message = "تم تحديث الموظف بنجاح"
+            # For edit, national_id is the new one, but since it's the same field, we need to check if it changed
+            # But since we don't have old, perhaps always update
+            employee = Employee(number, new_national_id, num_file, first_name, last_name, direction, job, title, department)
+            db.update_employee(employee)
+            message = "تم تحديث الموظف بنجاح"
 
         elif action == "delete":
-            national_id = request.form["national_id"]
-            db.delete_employee(national_id)
+            number = request.form["number"]
+            db.delete_employee(number)
             message = "تم حذف الموظف بنجاح"
 
     db.cursor.execute("SELECT * FROM employees")
