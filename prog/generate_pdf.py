@@ -1,6 +1,7 @@
 import os
 import subprocess
 from jinja2 import Template
+from PyPDF2 import PdfMerger
 
 
 class PDFGenerator:
@@ -48,5 +49,17 @@ class PDFGenerator:
             file = f"temp.{ext}"
             if os.path.exists(file):
                 os.remove(file)
+
+        return output_path
+
+    def merge_pdfs(self, pdf_files, output_path):
+
+        merger = PdfMerger()
+
+        for pdf in pdf_files:
+            merger.append(pdf)
+
+        merger.write(output_path)
+        merger.close()
 
         return output_path

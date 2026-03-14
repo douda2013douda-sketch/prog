@@ -3,6 +3,7 @@ from database import Database
 from generate_pdf import PDFGenerator
 from models import Employee, Leave
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 
@@ -120,17 +121,33 @@ def leave():
         # طباعة جميع الإجازات
         if action == "print":
 
+            leaves_data = []
+
+            pdf_files = []
+
             for leave in leaves_list:
 
                 employee = db.find_employee_by_id(leave.national_id)
 
                 db.add_leave(leave)
 
-                generator.generate(employee, leave)
+                pdf_path = generator.generate(employee, leave)
+
+                pdf_files.append(pdf_path)
+
+                leaves_data.append({'employee': employee, 'leave': leave})
+
+            # دمج PDFs
+            merged_pdf = os.path.join(generator.output_dir, "merged_leaves.pdf")
+            generator.merge_pdfs(pdf_files, merged_pdf)
 
             leaves_list.clear()
 
-            message = "تم إنشاء جميع ملفات PDF"
+            # حذف الملف المجمع بعد الطباعة (لأن الملفات المنفصلة محفوظة)
+            # لكن لنحتفظ به مؤقتاً للتحميل إذا لزم الأمر
+            # os.remove(merged_pdf)  # يمكن تفعيله إذا أردت الحذف الفوري
+
+            return render_template("print_leaves.html", leaves_data=leaves_data)
 
 
     db.cursor.execute("SELECT * FROM employees")
@@ -146,3 +163,14 @@ def leave():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+@app.route("/download_merged")
+def download_merged():
+    merged_pdf = os.path.join(generator.output_dir, "merged_leaves.pdf")
+    if os.path.exists(merged_pdf):
+        response = send_file(merged_pdf, as_attachment=True)
+        # حذف الملف بعد التحميل
+        os.remove(merged_pdf)
+        return response
+    else:
+        return "الملف غير موجود", 404

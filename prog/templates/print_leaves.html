@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>طباعة الإجازات</title>
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .leave { page-break-after: always; border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; }
+        @media print { .no-print { display: none; } }
+    </style>
+</head>
+<body>
+    <h1>إجازات الموظفين</h1>
+    <p><a href="/download_merged" target="_blank">تحميل ملف PDF المجمع</a></p>
+    <button class="no-print" onclick="window.print()">طباعة</button>
+    <div class="leave">
+        <h2>إجازة رقم {{ item.leave.document_number() }}</h2>
+        <p><strong>الموظف:</strong> {{ item.employee.full_name() }}</p>
+        <p><strong>الرقم التعريفي:</strong> {{ item.employee.national_id }}</p>
+        <p><strong>تاريخ البدء:</strong> {{ item.leave.start_date }}</p>
+        <p><strong>تاريخ الانتهاء:</strong> {{ item.leave.end_date }}</p>
+        <p><strong>الحالة:</strong> {{ item.leave.document_status }}</p>
+        <!-- أضف المزيد من التفاصيل حسب الحاجة -->
+    </div>
+    {% endfor %}
+    <button class="no-print" onclick="window.print()">طباعة</button>
+</body>
+</html>
