@@ -199,3 +199,18 @@ class Database:
             return 1
 
         return result[0] + 1
+
+    def get_next_serial(self, year):
+
+        self.cursor.execute("""
+        SELECT MAX(serial_number)
+        FROM leaves
+        WHERE year=?
+        """, (year,))
+
+        result = self.cursor.fetchone()
+
+        if result is None or result[0] is None:
+            return 1
+
+        return result[0] + 1
