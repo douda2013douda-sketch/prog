@@ -200,12 +200,13 @@ class Database:
 
         return result[0] + 1
 
-    def get_next_serial(self):
+    def get_next_serial(self, year):
 
         self.cursor.execute("""
         SELECT MAX(serial_number)
         FROM leaves
-        """)
+        WHERE year=?
+        """, (year,))
 
         result = self.cursor.fetchone()
 
