@@ -18,7 +18,7 @@ class Database:
         # تفعيل العلاقات
         self.cursor.execute("PRAGMA foreign_keys = ON")
 
-
+        self.create_tables()
     def create_tables(self):
 
         self.cursor.execute("""
@@ -192,9 +192,9 @@ class Database:
         WHERE year=?
         """, (year,))
 
-        result = self.cursor.fetchone()[0]
+        result = self.cursor.fetchone()
 
-        if result is None:
+        if result is None or result[0] is None:
             return 1
 
-        return result + 1
+        return result[0] + 1

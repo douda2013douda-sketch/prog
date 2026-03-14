@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, send_file
 from database import Database
 from generate_pdf import PDFGenerator
-from models import Leave
+from models import Employee, Leave
 from datetime import datetime
 
 app = Flask(__name__)
