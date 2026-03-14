@@ -118,6 +118,48 @@ def leave():
 
                 message = "تمت إضافة الإجازة إلى القائمة"
 
+        # طباعة إجازة منفردة
+        elif action == "print_single":
+
+            national_id = request.form["national_id"].strip()
+
+            employee = db.find_employee_by_id(national_id)
+
+            if not employee:
+                message = "الموظف غير موجود"
+
+            else:
+
+                year = datetime.now().year
+                serial = db.get_next_serial(year)
+
+                issued_in = request.form["issued_in"]
+                start_date = request.form["start_date"]
+                end_date = request.form["end_date"]
+                status = "صالح"
+
+                leave = Leave(
+                    None,
+                    serial,
+                    year,
+                    national_id,
+                    issued_in,
+                    start_date,
+                    end_date,
+                    status
+                )
+
+                # إضافة إلى القاعدة
+                db.add_leave(leave)
+
+                # إنشاء PDF
+                pdf_path = generator.generate(employee, leave)
+
+                # بيانات للطباعة
+                leaves_data = [{'employee': employee, 'leave': leave}]
+
+                return render_template("print_leaves.html", leaves_data=leaves_data)
+
         # طباعة جميع الإجازات
         if action == "print":
 
