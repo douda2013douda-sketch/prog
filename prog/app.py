@@ -44,7 +44,8 @@ def employees():
             message = "تمت إضافة الموظف بنجاح"
 
         elif action == "edit":
-            national_id = request.form["national_id"]
+            old_national_id = request.form["national_id"]
+            new_national_id = request.form["national_id_input"]
             number = request.form["number"]
             num_file = request.form["num_file"]
             first_name = request.form["first_name"]
@@ -54,9 +55,16 @@ def employees():
             title = request.form["title"]
             department = request.form["department"]
 
-            employee = Employee(national_id, number, num_file, first_name, last_name, direction, job, title, department)
-            db.update_employee(employee)
-            message = "تم تحديث الموظف بنجاح"
+            if old_national_id != new_national_id:
+                # إذا تغير الرقم التعريفي، احذف القديم وأضف جديد
+                db.delete_employee(old_national_id)
+                employee = Employee(new_national_id, number, num_file, first_name, last_name, direction, job, title, department)
+                db.add_employee(employee)
+                message = "تم تحديث الموظف بنجاح (تم تغيير الرقم التعريفي)"
+            else:
+                employee = Employee(new_national_id, number, num_file, first_name, last_name, direction, job, title, department)
+                db.update_employee(employee)
+                message = "تم تحديث الموظف بنجاح"
 
         elif action == "delete":
             national_id = request.form["national_id"]
