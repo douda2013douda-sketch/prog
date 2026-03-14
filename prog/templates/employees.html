@@ -143,7 +143,7 @@ margin-bottom:20px;
 
 <tr class="employeeRow">
 
-<td>{{ emp[1] }}</td>
+<td>{{ emp[0] }}</td>
 <td>{{ emp[2] }}</td>
 <td>{{ emp[3] }}</td>
 <td>{{ emp[4] }}</td>
@@ -154,6 +154,19 @@ margin-bottom:20px;
 
 <td>
 <button class="edit" onclick="editEmployee('{{ emp[0] }}', '{{ emp[1] }}', '{{ emp[2] }}', '{{ emp[3] }}', '{{ emp[4] }}', '{{ emp[5] }}', '{{ emp[6] }}', '{{ emp[7] }}', '{{ emp[8] }}')">تعديل</button>
+</td>
+
+<td>
+<form method="POST" style="display:inline;">
+<input type="hidden" name="action" value="delete">
+<input type="hidden" name="national_id" value="{{ emp[0] }}">
+<button class="delete" type="submit" onclick="return confirm('هل أنت متأكد من الحذف؟')">حذف</button>
+</form>
+</td>
+
+</tr>
+
+{% endfor %}', '{{ emp[5] }}', '{{ emp[6] }}', '{{ emp[7] }}', '{{ emp[8] }}')">تعديل</button>
 </td>
 
 <td>
