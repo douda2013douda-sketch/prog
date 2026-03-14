@@ -166,19 +166,6 @@ margin-bottom:20px;
 
 </tr>
 
-{% endfor %}', '{{ emp[5] }}', '{{ emp[6] }}', '{{ emp[7] }}', '{{ emp[8] }}')">تعديل</button>
-</td>
-
-<td>
-<form method="POST" style="display:inline;">
-<input type="hidden" name="action" value="delete">
-<input type="hidden" name="national_id" value="{{ emp[0] }}">
-<button class="delete" type="submit" onclick="return confirm('هل أنت متأكد من الحذف؟')">حذف</button>
-</form>
-</td>
-
-</tr>
-
 {% endfor %}
 
 </table>
