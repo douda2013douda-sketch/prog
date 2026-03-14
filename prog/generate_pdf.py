@@ -1,7 +1,7 @@
 import os
 import subprocess
 from jinja2 import Template
-from PyPDF2 import PdfMerger
+from pypdf import PdfMerger
 
 
 class PDFGenerator:
