@@ -100,7 +100,10 @@ def leave():
                 if serial_input:
                     serial = int(serial_input)
                 else:
-                    serial = db.get_next_serial(year)
+                    # احسب الرقم التالي بناءً على قاعدة البيانات + القائمة المؤقتة
+                    max_db = db.get_next_serial(year) - 1  # MAX موجود
+                    max_list = max([l.serial_number for l in leaves_list] + [0])
+                    serial = max(max_db, max_list) + 1
 
                 issued_in = request.form["issued_in"]
                 start_date = request.form["start_date"]
