@@ -100,7 +100,7 @@ def leave():
                 if serial_input:
                     serial = int(serial_input)
                 else:
-                    serial = db.get_next_serial(year)
+                    serial = db.get_next_serial()
 
                 issued_in = request.form["issued_in"]
                 start_date = request.form["start_date"]
@@ -140,7 +140,7 @@ def leave():
                 if serial_input:
                     serial = int(serial_input)
                 else:
-                    serial = db.get_next_serial(year)
+                    serial = db.get_next_serial()
 
                 issued_in = request.form["issued_in"]
                 start_date = request.form["start_date"]
