@@ -4,6 +4,7 @@ from generate_pdf import PDFGenerator
 from models import Employee, Leave
 from datetime import datetime
 import os
+from io import BytesIO
 
 app = Flask(__name__)
 
@@ -177,17 +178,19 @@ def leave():
 
                 leaves_data.append({'employee': employee, 'leave': leave})
 
-            # دمج PDFs
-            merged_pdf = os.path.join(generator.output_dir, "merged_leaves.pdf")
-            generator.merge_pdfs(pdf_files, merged_pdf)
+            # دمج PDFs في الذاكرة
+            from pypdf import PdfWriter
+            writer = PdfWriter()
+            for pdf in pdf_files:
+                writer.append(pdf)
+            buffer = BytesIO()
+            writer.write(buffer)
+            buffer.seek(0)
 
             leaves_list.clear()
 
-            # حذف الملف المجمع بعد الطباعة (لأن الملفات المنفصلة محفوظة)
-            # لكن لنحتفظ به مؤقتاً للتحميل إذا لزم الأمر
-            # os.remove(merged_pdf)  # يمكن تفعيله إذا أردت الحذف الفوري
-
-            return render_template("print_leaves.html", leaves_data=leaves_data)
+            # إرسال PDF المجمع من الذاكرة
+            return send_file(buffer, mimetype='application/pdf', as_attachment=False)
 
 
     db.cursor.execute("SELECT * FROM employees")
@@ -206,11 +209,5 @@ if __name__ == "__main__":
 
 @app.route("/download_merged")
 def download_merged():
-    merged_pdf = os.path.join(generator.output_dir, "merged_leaves.pdf")
-    if os.path.exists(merged_pdf):
-        response = send_file(merged_pdf, as_attachment=True)
-        # حذف الملف بعد التحميل
-        os.remove(merged_pdf)
-        return response
-    else:
-        return "الملف غير موجود", 404
+    # لم يعد هناك ملف مجمع، لأنه يُرسل من الذاكرة
+    return "الملف غير متوفر", 404
