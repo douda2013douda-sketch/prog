@@ -155,10 +155,8 @@ def leave():
                 # إنشاء PDF
                 pdf_path = generator.generate(employee, leave)
 
-                # بيانات للطباعة
-                leaves_data = [{'employee': employee, 'leave': leave}]
-
-                return render_template("print_leaves.html", leaves_data=leaves_data)
+                # فتح ملف PDF في المتصفح
+                return send_file(pdf_path, mimetype='application/pdf')
 
         # طباعة جميع الإجازات
         if action == "print":
