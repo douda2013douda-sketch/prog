@@ -20,13 +20,53 @@ def home():
 
 
 # صفحة عرض الموظفين
-@app.route("/employees")
+@app.route("/employees", methods=["GET", "POST"])
 def employees():
+
+    message = ""
+
+    if request.method == "POST":
+        action = request.form.get("action")
+
+        if action == "add":
+            national_id = request.form["national_id_input"]
+            number = request.form["number"]
+            num_file = request.form["num_file"]
+            first_name = request.form["first_name"]
+            last_name = request.form["last_name"]
+            direction = request.form["direction"]
+            job = request.form["job"]
+            title = request.form["title"]
+            department = request.form["department"]
+
+            employee = Employee(national_id, number, num_file, first_name, last_name, direction, job, title, department)
+            db.add_employee(employee)
+            message = "تمت إضافة الموظف بنجاح"
+
+        elif action == "edit":
+            national_id = request.form["national_id"]
+            number = request.form["number"]
+            num_file = request.form["num_file"]
+            first_name = request.form["first_name"]
+            last_name = request.form["last_name"]
+            direction = request.form["direction"]
+            job = request.form["job"]
+            title = request.form["title"]
+            department = request.form["department"]
+
+            employee = Employee(national_id, number, num_file, first_name, last_name, direction, job, title, department)
+            db.update_employee(employee)
+            message = "تم تحديث الموظف بنجاح"
+
+        elif action == "delete":
+            national_id = request.form["national_id"]
+            db.delete_employee(national_id)
+            message = "تم حذف الموظف بنجاح"
 
     db.cursor.execute("SELECT * FROM employees")
     rows = db.cursor.fetchall()
 
-    return render_template("employees.html", employees=rows)
+    return render_template("employees.html", employees=rows, message=message)
 
 
 # صفحة تحرير الإجازة

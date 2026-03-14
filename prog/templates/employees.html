@@ -19,21 +19,9 @@ text-align:center;
 margin-bottom:30px;
 }
 
-table{
-width:100%;
-border-collapse:collapse;
-background:white;
-}
-
-th, td{
-padding:10px;
-border:1px solid #ddd;
-text-align:center;
-}
-
-th{
-background:#3498db;
-color:white;
+input, select{
+padding:8px;
+margin:5px;
 }
 
 button{
@@ -65,6 +53,42 @@ color:white;
 margin-top:15px;
 }
 
+.message{
+color:green;
+margin-bottom:10px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+background:white;
+}
+
+th, td{
+padding:10px;
+border:1px solid #ddd;
+text-align:center;
+}
+
+th{
+background:#3498db;
+color:white;
+}
+
+#searchInput{
+width:100%;
+padding:10px;
+margin-bottom:20px;
+}
+
+#formContainer{
+display:none;
+background:white;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+}
+
 </style>
 
 </head>
@@ -73,9 +97,35 @@ margin-top:15px;
 
 <h1>إدارة الموظفين</h1>
 
-<button class="add">إضافة موظف</button>
+{% if message %}
+<div class="message">{{ message }}</div>
+{% endif %}
 
-<table>
+<input type="text" id="searchInput" placeholder="ابحث عن موظف...">
+
+<button class="add" onclick="showAddForm()">إضافة موظف</button>
+
+<div id="formContainer">
+<form id="employeeForm" method="POST">
+<input type="hidden" name="action" id="formAction" value="add">
+<input type="hidden" name="national_id" id="editNationalId">
+
+<label>الرقم التعريفي: <input type="text" name="national_id_input" id="nationalIdInput" required></label><br>
+<label>الرقم: <input type="number" name="number" required></label><br>
+<label>رقم الملف: <input type="text" name="num_file" required></label><br>
+<label>الاسم الأول: <input type="text" name="first_name" required></label><br>
+<label>اللقب: <input type="text" name="last_name" required></label><br>
+<label>الاتجاه: <input type="text" name="direction" required></label><br>
+<label>الوظيفة: <input type="text" name="job" required></label><br>
+<label>الصفة: <input type="text" name="title" required></label><br>
+<label>القسم: <input type="text" name="department" required></label><br>
+
+<button class="save" type="submit">حفظ</button>
+<button type="button" onclick="hideForm()">إلغاء</button>
+</form>
+</div>
+
+<table id="employeesTable">
 
 <tr>
 <th>الرقم</th>
@@ -92,7 +142,7 @@ margin-top:15px;
 
 {% for emp in employees %}
 
-<tr>
+<tr class="employeeRow">
 
 <td>{{ emp[0] }}</td>
 <td>{{ emp[1] }}</td>
@@ -104,11 +154,15 @@ margin-top:15px;
 <td>{{ emp[7] }}</td>
 
 <td>
-<button class="edit">تعديل</button>
+<button class="edit" onclick="editEmployee('{{ emp[0] }}', '{{ emp[1] }}', '{{ emp[2] }}', '{{ emp[3] }}', '{{ emp[4] }}', '{{ emp[5] }}', '{{ emp[6] }}', '{{ emp[7] }}')">تعديل</button>
 </td>
 
 <td>
-<button class="delete">حذف</button>
+<form method="POST" style="display:inline;">
+<input type="hidden" name="action" value="delete">
+<input type="hidden" name="national_id" value="{{ emp[0] }}">
+<button class="delete" type="submit" onclick="return confirm('هل أنت متأكد من الحذف؟')">حذف</button>
+</form>
 </td>
 
 </tr>
@@ -117,10 +171,49 @@ margin-top:15px;
 
 </table>
 
-<br>
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    var filter = this.value.toLowerCase();
+    var rows = document.querySelectorAll('.employeeRow');
+    rows.forEach(function(row) {
+        var text = row.textContent.toLowerCase();
+        if (text.includes(filter)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
 
-<button class="save">حفظ</button>
+function showAddForm() {
+    document.getElementById('formAction').value = 'add';
+    document.getElementById('editNationalId').value = '';
+    document.getElementById('nationalIdInput').value = '';
+    document.getElementById('nationalIdInput').disabled = false;
+    document.getElementById('employeeForm').reset();
+    document.getElementById('formContainer').style.display = 'block';
+}
+
+function editEmployee(nationalId, number, numFile, firstName, lastName, direction, job, title, department) {
+    document.getElementById('formAction').value = 'edit';
+    document.getElementById('editNationalId').value = nationalId;
+    document.getElementById('nationalIdInput').value = nationalId;
+    document.getElementById('nationalIdInput').disabled = true;
+    document.getElementById('employeeForm').elements['number'].value = number;
+    document.getElementById('employeeForm').elements['num_file'].value = numFile;
+    document.getElementById('employeeForm').elements['first_name'].value = firstName;
+    document.getElementById('employeeForm').elements['last_name'].value = lastName;
+    document.getElementById('employeeForm').elements['direction'].value = direction;
+    document.getElementById('employeeForm').elements['job'].value = job;
+    document.getElementById('employeeForm').elements['title'].value = title;
+    document.getElementById('employeeForm').elements['department'].value = department;
+    document.getElementById('formContainer').style.display = 'block';
+}
+
+function hideForm() {
+    document.getElementById('formContainer').style.display = 'none';
+}
+</script>
 
 </body>
-
 </html>

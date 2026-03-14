@@ -89,6 +89,40 @@ class Database:
         self.conn.commit()
 
 
+    def update_employee(self, employee):
+
+        self.cursor.execute("""
+        UPDATE employees SET
+            number=?,
+            num_file=?,
+            first_name=?,
+            last_name=?,
+            direction=?,
+            job=?,
+            title=?,
+            department=?
+        WHERE national_id=?
+        """, (
+            employee.number,
+            employee.num_file,
+            employee.first_name,
+            employee.last_name,
+            employee.direction,
+            employee.job,
+            employee.title,
+            employee.department,
+            employee.national_id
+        ))
+
+        self.conn.commit()
+
+
+    def delete_employee(self, national_id):
+
+        self.cursor.execute("DELETE FROM employees WHERE national_id=?", (national_id,))
+        self.conn.commit()
+
+
     def find_employee_by_id(self, national_id):
 
         self.cursor.execute("""
