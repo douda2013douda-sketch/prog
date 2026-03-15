@@ -64,7 +64,12 @@ class PDFGenerator:
         with open(tex_file, "w", encoding="utf-8") as f:
             f.write(template_content)
 
-        subprocess.run(["xelatex", "-interaction=nonstopmode", tex_file])
+        result = subprocess.run(["xelatex", "-interaction=nonstopmode", tex_file], capture_output=True, text=True)
+
+        if result.returncode != 0:
+            print("xelatex error:")
+            print(result.stdout)
+            print(result.stderr)
 
         # اسم الملف الاحترافي
         doc_number = f"{leave.year}-{leave.serial_number:05d}"
@@ -75,12 +80,8 @@ class PDFGenerator:
         # نقل ملف PDF
         if os.path.exists("temp.pdf"):
             os.rename("temp.pdf", output_path)
-
-        # حذف الملفات المؤقتة
-        for ext in ["aux", "log", "tex"]:
-            file = f"temp.{ext}"
-            if os.path.exists(file):
-                os.remove(file)
+        else:
+            print("temp.pdf not created")
 
         return output_path
 

@@ -175,6 +175,10 @@ def leave():
                 # إنشاء PDF
                 pdf_path = generator.generate(employee, leave)
 
+                if not os.path.exists(pdf_path):
+                    message = "فشل في إنشاء ملف PDF. تحقق من الأخطاء في النموذج."
+                    return redirect(url_for('leave', message=message))
+
                 # فتح ملف PDF في المتصفح
                 return send_file(pdf_path, mimetype='application/pdf')
 
