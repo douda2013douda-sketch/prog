@@ -205,7 +205,10 @@ def leave():
             from pypdf import PdfWriter
             writer = PdfWriter()
             for pdf in pdf_files:
-                writer.append(pdf)
+                if os.path.exists(pdf):
+                    writer.append(pdf)
+                else:
+                    print(f"Warning: PDF file not found: {pdf}")
             buffer = BytesIO()
             writer.write(buffer)
             buffer.seek(0)
