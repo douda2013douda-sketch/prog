@@ -6,49 +6,59 @@
 \setmainlanguage{arabic}
 \setmainfont{Amiri}
 
-\pagestyle{empty}
-
-\newcommand{\halfpage}{
-    \begin{minipage}[t][0.47\textheight]{\textwidth}
-        
-        \vspace*{0.5cm}
-        \begin{center}
-            {\Huge \textbf{عنوان}}
-        \end{center}
-        \vspace{1cm}
-        
-        {\large \bfseries
-        \noindent رقم الإجازة: {{ leave.document_number() }} \\[1.2ex]
-        \noindent الرقم التعريفي: {{ employee.national_id }} \\[1.2ex]
-        \noindent الاسم: {{ employee.first_name }} \\[1.2ex]
-        \noindent اللقب: {{ employee.last_name }} \\[1.2ex]
-        \noindent الاتجاه: {{ employee.direction }} \\[1.2ex]
-        \noindent الوظيفة: {{ employee.job }} \\[1.2ex]
-        \noindent الصفة: {{ employee.title }} \\[1.2ex]
-        \noindent القسم: {{ employee.department }} \\[1.2ex]
-        }
-        
-        \vfill
-        
-        \noindent\hfill
-        \begin{minipage}{0.45\textwidth}
-            {\large \textbf{حرر ب: {{ leave.issued_in }} }}
-            \vspace*{2.5cm}
-        \end{minipage}
-        
-    \end{minipage}
-}
-
-\begin{document}
-
-\halfpage
-
-\vfill
-\begin{center}
-\rule{0.8\textwidth}{0.5pt}
-\end{center}
-\vfill
-
-\halfpage
-
-\end{document}
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{595.27559055bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.7047619)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{drawing.pdf}}%
+    \put(0.59948186,0.15394961){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\textbf{قائد مدرسة تقنيات المعتمدية الشهيد الجيلالي بونعامة/ن ع}\textbf{1}\end{tabular}}}}%
+    \put(0.05803877,0.53760458){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\VAR{leave_num}\end{tabular}}}}%
+    \put(0.0569437,0.50961551){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\VAR{national_id}\end{tabular}}}}%
+    \put(0.05702613,0.48187371){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\VAR{department}\end{tabular}}}}%
+    \put(0.5217131,0.35995575){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\VAR{title}\end{tabular}}}}%
+    \put(0.64175882,0.32845776){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\VAR{name}\end{tabular}}}}%
+    \put(0.46794865,0.32845776){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\VAR{last_name}\end{tabular}}}}%
+    \put(0.56075892,0.30115164){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\VAR{job}\end{tabular}}}}%
+    \put(0.53759753,0.27269153){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\VAR{duration}\end{tabular}}}}%
+    \put(0.69887916,0.24404308){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\VAR{start-date}\end{tabular}}}}%
+    \put(0.42906773,0.24530302){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{0}\smash{\begin{tabular}[t]{l}\VAR{end_date}\end{tabular}}}}%
+    \put(0.56466815,0.21364013){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\VAR{direction}\end{tabular}}}}%
+    \put(0.78959448,0.21374615){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\textbf{البليــــــدة}\end{tabular}}}}%
+    \put(0.67302239,0.18430876){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\textbf{البليــــــدة}\end{tabular}}}}%
+    \put(0.49337077,0.18548628){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\VAR{signature_date}\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{drawing.pdf}}%
+    \put(0.39274559,0.60401103){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\VAR{SLASH1}\end{tabular}}}}%
+    \put(0.51049513,0.60401103){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\VAR{SLASH2}\end{tabular}}}}%
+    \put(0.62824478,0.60401103){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\VAR{SLASH3}\end{tabular}}}}%
+    \put(0.35976938,0.52342753){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\VAR{type1}\end{tabular}}}}%
+    \put(0.51227251,0.52225001){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\VAR{type2}\end{tabular}}}}%
+    \put(0.60882716,0.5234275){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\VAR{type3}\end{tabular}}}}%
+    \put(0.72068929,0.52225001){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\VAR{type4}\end{tabular}}}}%
+    \put(0.89835922,0.1730963){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{0}\smash{\begin{tabular}[t]{c}\textbf{مع أجر الحضور}\end{tabular}}}}%
+  \end{picture}%
+\endgroup%

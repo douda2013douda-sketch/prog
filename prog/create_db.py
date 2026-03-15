@@ -35,6 +35,8 @@ CREATE TABLE IF NOT EXISTS leaves (
     start_date TEXT,
     end_date TEXT,
     document_status TEXT,
+    leave_type TEXT DEFAULT 'إجازة',
+    signature_date TEXT,
 
     FOREIGN KEY (national_id)
     REFERENCES employees(national_id)

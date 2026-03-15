@@ -175,6 +175,17 @@ margin-bottom: 30px;
 تاريخ النهاية
 <input type="date" name="end_date" required>
 
+نوع الإجازة
+<select name="leave_type" required>
+    <option value="إجازة">إجازة</option>
+    <option value="تمديد اجازة">تمديد اجازة</option>
+    <option value="نقاهة">نقاهة</option>
+    <option value="عطلة">عطلة</option>
+</select>
+
+تاريخ التحرير
+<input type="date" name="signature_date" required>
+
 <br><br>
 
 <button class="add" type="submit" name="action" value="add">
@@ -198,6 +209,8 @@ margin-bottom: 30px;
 <th>البداية</th>
 <th>النهاية</th>
 <th>مكان التحرير</th>
+<th>نوع الإجازة</th>
+<th>تاريخ التحرير</th>
 </tr>
 
 {% for leave in leaves_list %}
@@ -209,6 +222,8 @@ margin-bottom: 30px;
 <td>{{ leave.start_date }}</td>
 <td>{{ leave.end_date }}</td>
 <td>{{ leave.issued_in }}</td>
+<td>{{ leave.leave_type }}</td>
+<td>{{ leave.signature_date }}</td>
 
 </tr>
 

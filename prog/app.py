@@ -108,6 +108,8 @@ def leave():
                 issued_in = request.form["issued_in"]
                 start_date = request.form["start_date"]
                 end_date = request.form["end_date"]
+                leave_type = request.form.get("leave_type", "إجازة")
+                signature_date = request.form.get("signature_date", issued_in)
                 status = "صالح"
 
                 leave = Leave(
@@ -118,7 +120,9 @@ def leave():
                     issued_in,
                     start_date,
                     end_date,
-                    status
+                    status,
+                    leave_type,
+                    signature_date
                 )
 
                 # إضافة إلى القائمة المؤقتة
@@ -148,6 +152,8 @@ def leave():
                 issued_in = request.form["issued_in"]
                 start_date = request.form["start_date"]
                 end_date = request.form["end_date"]
+                leave_type = request.form.get("leave_type", "إجازة")
+                signature_date = request.form.get("signature_date", issued_in)
                 status = "صالح"
 
                 leave = Leave(
@@ -158,7 +164,9 @@ def leave():
                     issued_in,
                     start_date,
                     end_date,
-                    status
+                    status,
+                    leave_type,
+                    signature_date
                 )
 
                 # إضافة إلى القاعدة

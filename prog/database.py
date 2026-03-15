@@ -49,12 +49,25 @@ class Database:
             start_date TEXT,
             end_date TEXT,
             document_status TEXT,
+            leave_type TEXT DEFAULT 'إجازة',
+            signature_date TEXT,
 
             FOREIGN KEY (national_id)
             REFERENCES employees(national_id)
 
         )
         """)
+
+        # إضافة الأعمدة الجديدة إذا لم تكن موجودة
+        try:
+            self.cursor.execute("ALTER TABLE leaves ADD COLUMN leave_type TEXT DEFAULT 'إجازة'")
+        except sqlite3.OperationalError:
+            pass  # العمود موجود بالفعل
+
+        try:
+            self.cursor.execute("ALTER TABLE leaves ADD COLUMN signature_date TEXT")
+        except sqlite3.OperationalError:
+            pass  # العمود موجود بالفعل
 
         self.conn.commit()
 
@@ -160,9 +173,11 @@ class Database:
             issued_in,
             start_date,
             end_date,
-            document_status
+            document_status,
+            leave_type,
+            signature_date
         )
-        VALUES (?,?,?,?,?,?,?)
+        VALUES (?,?,?,?,?,?,?,?,?)
         """, (
             leave.serial_number,
             leave.year,
@@ -170,7 +185,9 @@ class Database:
             leave.issued_in,
             leave.start_date,
             leave.end_date,
-            leave.document_status
+            leave.document_status,
+            leave.leave_type,
+            leave.signature_date
         ))
 
         self.conn.commit()
